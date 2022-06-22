@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": [
+      "es2019"
+    ],
+    "allowJs": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "sourceRoot": "/",
+    "outDir": "../.server_dist/",
+    "downlevelIteration": true,
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "**/*__spec.ts",
+    "**/__mocks__/*"
+  ],
+  "include": [ "./**/*"  ],
+}
