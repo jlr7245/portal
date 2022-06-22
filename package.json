@@ -1,0 +1,7 @@
+{
+  "name": "patientportal",
+  "version": "1.0.0",
+  "description": "Code challenge app for Done",
+  "main": "index.js",
+  "license": "MIT"
+}
