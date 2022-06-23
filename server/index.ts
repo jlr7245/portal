@@ -2,6 +2,7 @@ require('dotenv').config();
 import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import morgan from 'morgan';
+import cors from 'cors';
 import { graphqlHTTP } from 'express-graphql';
 
 import { StatusError } from './utils';
@@ -15,6 +16,7 @@ app.listen(PORT, () => {
 });
 
 app.use(morgan('dev'));
+app.use(cors());
 
 // this takes care of the gql server
 app.use(express.static(path.join(__dirname, 'public')));

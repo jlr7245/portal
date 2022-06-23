@@ -1,9 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql,
+} from '@apollo/client';
 
-//@ts-ignore
-const Application: React.SFC<{}> = () => (
-  <h1>Patient Portal</h1>
+import App from './components/App';
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
+
+render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById('root'),
 );
-
-render(<Application />, document.getElementById('root'));
