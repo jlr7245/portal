@@ -16,3 +16,23 @@ $mono: 'IBM Plex Mono', monospace;
 $sans: 'IBM Plex Sans', sans-serif;
 
 
+@mixin mobile-down {
+  @media screen and (max-width: 599px) { @content; }
+}
+@mixin tabletportrait-up {
+  @media screen and (min-width: 600px) { @content; }
+}
+@mixin tabletportrait-down {
+  @media screen and (max-width: 899px) { @content };
+}
+@mixin tabletlandscape-up {
+  @media screen and (min-width: 900px) { @content; }
+}
+@mixin desktop-up {
+  @media screen and (min-width: 1200px) { @content; }
+}
+@mixin big-desktop-up {
+  @media screen and (min-width: 1800px) { @content; }
+}
+
+

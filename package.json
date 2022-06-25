@@ -8,7 +8,12 @@
     "build:portal": "parcel build portal/index.html --dist-dir ./.server_dist/public",
     "start:server": "ts-node-dev --log-error server/index.ts",
     "build:server": "tsc --build server/tsconfig.json",
-    "start:production": "yarn build:server && yarn build:portal && node ./.server_dist/index.js"
+    "start:production": "yarn build:server && yarn build:portal && node ./.server_dist/index.js",
+
+    "db:setup": "echo 'coming soon...'",
+    "db:clean": "echo `coming soon...'",
+
+    "makeenv": "cp .env.template .env"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.6.1",

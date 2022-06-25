@@ -1,0 +1,1 @@
+yarn build:server && yarn build:portal && node ./.server_dist/index.js
