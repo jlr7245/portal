@@ -1,0 +1,1 @@
+DROP DATABASE jsilv_patientportal;

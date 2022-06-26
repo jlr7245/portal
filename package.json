@@ -10,8 +10,8 @@
     "build:server": "tsc --build server/tsconfig.json",
     "start:production": "yarn build:server && yarn build:portal && node ./.server_dist/index.js",
 
-    "db:setup": "echo 'coming soon...'",
-    "db:clean": "echo `coming soon...'",
+    "db:setup": "psql -f server/db/migrations/setup.sql",
+    "db:clean": "psql -f server/db/migrations/cleanup.sql",
 
     "makeenv": "cp .env.template .env"
   },
