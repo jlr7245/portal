@@ -30,7 +30,7 @@ const GET_GOOGLE_KEY = gql`
   }
 `;
 
-const RegisterFormController = () => {
+const RegisterFormController = ({ setAuth }: { setAuth: Function }) => {
   const [registerUser, { data: userData, loading: userLoading, error: userError }] =
     useMutation(REGISTER_USER);
 
@@ -51,7 +51,11 @@ const RegisterFormController = () => {
       {keyLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <RegisterForm registerUser={registerUser} googleKey={keyData.googleKey} />
+        <RegisterForm
+          registerUser={registerUser}
+          googleKey={keyData.googleKey}
+          setAuth={setAuth}
+        />
       )}
     </div>
   );

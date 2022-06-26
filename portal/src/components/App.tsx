@@ -49,7 +49,7 @@ const App = () => {
             <h1>Portal</h1>
           </div>
           <Routes>
-            <Route path="/" element={<RegisterForm />} />
+            <Route path="/" element={<RegisterForm setAuth={setAuth} />} />
             <Route path="login" element={<LoginForm setAuth={setAuth} />} />
             <Route path="dash" element={<Dashboard />} />
             <Route path="logout" element={<Logout setAuth={setAuth} />} />

@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { Container, SubmitButton, TextInput } from '../../layout';
@@ -7,6 +8,7 @@ import './RegisterForm.scss';
 
 type RegisterFormProps = {
   registerUser: Function;
+  setAuth: Function;
   googleKey: string;
 };
 
@@ -23,7 +25,9 @@ const RegisterFormValidationSchema = Yup.object().shape({
 const RegisterForm = ({
   registerUser,
   googleKey,
+  setAuth,
 }: RegisterFormProps): React.ReactElement => {
+  const navigator = useNavigate();
   return (
     <Container>
       <div className="form-holder">
@@ -38,8 +42,10 @@ const RegisterForm = ({
           validationSchema={RegisterFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const user = await registerUser({ variables: values });
+            setAuth({ isLoggedIn: true, user });
             setSubmitting(false);
             resetForm();
+            navigator('/dash');
           }}
         >
           {props => <Form>
