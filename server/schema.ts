@@ -1,16 +1,13 @@
 const {
-  GraphQLList,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLNonNull,
-  GraphQLString,
 } = require('graphql');
 
-import * as User from './api/User';
+import { User, BaseData } from './api';
 
 const query = new GraphQLObjectType({
   name: 'Query',
-  fields: () => ({ ...User.query /* could include other types here also */ }),
+  fields: () => ({ ...User.query, ...BaseData.query }),
 });
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
