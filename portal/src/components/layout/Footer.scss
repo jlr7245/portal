@@ -1,3 +1,27 @@
-@import 'theme';
+@import '../../../styles/theme';
+
+.footer-holder {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid lighten($ltg, 10);
+  ul {
+    display: flex;
+    width: 50vw;
+    margin: auto;
+    justify-content: space-between;
+    li {
+      display: block;
+      padding: 10px 0;
+      > a, > span {
+        color: $text;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover {
+          color: $pri;
+        }
+      }
+    }
+  }
+}
 
 

@@ -2,9 +2,9 @@ import { gql, useMutation } from '@apollo/client';
 import React from 'react';
 import LoginForm from './LoginForm';
 
-const LOGIN_USER = gql`
-  mutation LoginUser($username: String!, $password: String!) {
-    loginUser(
+const LOGIN_MUTATION = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(
       username: $username
       password: $password
     ) {
@@ -15,10 +15,10 @@ const LOGIN_USER = gql`
   }
 `
 
-const LoginFormController = () => {
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
+const LoginFormController = ({ setAuth }: { setAuth: Function }) => {
+  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
   return (
-    <LoginForm loginUser={loginUser} />
+    <LoginForm setAuth={setAuth} login={login} />
   )
 }
 

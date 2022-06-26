@@ -2,17 +2,20 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Container, SubmitButton, TextInput } from '../../layout';
+import { useNavigate } from 'react-router-dom';
 
 type LoginFormProps = {
-  loginUser: Function;
+  login: Function;
+  setAuth: Function;
 };
 
 const LoginFormValidationSchema = Yup.object().shape({
   username: Yup.string().required('Required'),
   password: Yup.string().required('Required'),
-})
+});
 
-const LoginForm = ({ loginUser }: LoginFormProps): React.ReactElement => {
+const LoginForm = ({ login, setAuth }: LoginFormProps): React.ReactElement => {
+  const navigation = useNavigate();
   return (
     <Container>
       <div className="form-holder">
@@ -23,10 +26,11 @@ const LoginForm = ({ loginUser }: LoginFormProps): React.ReactElement => {
           }}
           validationSchema={LoginFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
-            const user = await loginUser({ variables: values });
-            console.log(user);
+            const user = await login({ variables: values });
             setSubmitting(false);
             resetForm();
+            setAuth({ isLoggedIn: true, user });
+            navigation('/dash');
           }}
         >
           {(props) => (

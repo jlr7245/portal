@@ -83,6 +83,16 @@ export const query = {
       });
     },
   },
+  handshake: {
+    type: UserType,
+    description: 'Checks to see if there is a user logged in',
+    resolve: (_root: any, _args: {}, req: Request) => {
+      //@ts-ignore
+      if (!req.session.user) return null;
+      //@ts-ignore
+      return req.session.user;
+    }
+  }
 };
 
 export const mutation = {

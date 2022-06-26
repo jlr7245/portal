@@ -4,11 +4,11 @@ import React from 'react';
 
 type ViewContainerProps = {
   children: React.ReactElement | React.ReactElement[];
-  isFull?: boolean;
+  className?: string;
 };
 
-const Container: React.FC<ViewContainerProps> = ({ children, isFull }) => (
-  <div className={`view-container ${isFull && 'fullscreen'}`}>{children}</div>
+const Container: React.FC<ViewContainerProps> = ({ children, className }) => (
+  <div className={`view-container ${className}`}>{children}</div>
 );
 
 export default Container;
