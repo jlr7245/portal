@@ -4,6 +4,7 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import { graphqlHTTP } from 'express-graphql';
+import session from 'express-session';
 
 import { StatusError } from './utils';
 import schema from './schema';
@@ -17,13 +18,19 @@ app.listen(PORT, () => {
 
 app.use(morgan('dev'));
 app.use(cors());
+app.use(
+  session({
+    secret: process.env.SECRET_KEY as string,
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
 
-// this takes care of the gql server
+// this takes care of the client so that it's served from the server
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   '/graphql',
-  // something here for auth,
   graphqlHTTP({
     schema,
     graphiql: true,
@@ -36,5 +43,8 @@ app.use('*', (_req, _res, _next) => {
 
 app.use((err: StatusError | Error, _req: Request, res: Response, _next: NextFunction) => {
   const status = err instanceof StatusError ? err.status : 500;
+  if (err instanceof StatusError && process.env.NODE_ENV !== 'production') {
+    console.log(err.error);
+  }
   res.status(status).json({ err, message: err.message });
 });

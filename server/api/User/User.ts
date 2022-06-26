@@ -1,32 +1,34 @@
 import db from '../../db/config';
 import modelDefaults from '../utils/modelDefaults';
 
-type UserType = {
+export type UserDataType = {
   id?: number;
   username: string;
   first_name: string;
   last_name: string;
-  password_digest: string;
-  email: string;
-  dob: string;
-  address: string;
-  appointment_time: string;
-  photo_url: string;
+  password_digest?: string;
+  email?: string;
+  dob?: string;
+  address?: string;
+  appointment_time?: string;
+  photo_url?: string;
+  is_admin?: boolean;
 };
 
-const defaults = modelDefaults<UserType>('users');
+const defaults = modelDefaults<UserDataType>('users');
 
 class User {
   id?: number;
   username: string;
   first_name: string;
   last_name: string;
-  password_digest: string;
-  email: string;
-  dob: string;
-  address: string;
-  appointment_time: string;
-  photo_url: string;
+  password_digest?: string;
+  email?: string;
+  dob?: string;
+  address?: string;
+  appointment_time?: string;
+  photo_url?: string;
+  is_admin?: boolean;
 
   constructor({
     id,
@@ -39,7 +41,8 @@ class User {
     address,
     appointment_time,
     photo_url,
-  }: UserType) {
+    is_admin = false,
+  }: UserDataType) {
     this.id = id;
     this.username = username;
     this.first_name = first_name;
@@ -50,19 +53,28 @@ class User {
     this.address = address;
     this.appointment_time = appointment_time;
     this.photo_url = photo_url;
+    this.is_admin = is_admin;
   }
 
   static findAll = defaults.findAll;
   static findById = defaults.findById;
   static destroy = defaults.destroy;
 
-  private modify(changes: UserType): User {
+  static async findByUsername(username: string): Promise<User> {
+    const user: UserDataType = await db.one(
+      `SELECT * FROM users WHERE username = $1`,
+      username,
+    );
+    return new this(user);
+  }
+
+  private modify(changes: UserDataType): User {
     Object.assign(this, changes);
     return this;
   }
 
   async save(): Promise<User> {
-    const user: UserType = await db.one(
+    const user: UserDataType = await db.one(
       `
       INSERT INTO users (
         username, first_name, last_name, password_digest, email, dob, address, appointment_time, photo_url

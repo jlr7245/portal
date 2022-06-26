@@ -13,6 +13,8 @@
 
 The frontend of this app uses React and Apollo. The backend uses Node (Typescript) and GraphQL, with a PostgresQL database. Parcel is the bundler used.
 
+Authentication is done with a super simple setup of `express-session` and `bcryptjs`. There are a lot of different ways to do auth; this one struck me as the most lightweight.
+
 I considered using Go for the backend. However, Go is not a language I'm familiar with, while I have been building small Node services like this one for years. It would've been more time spent for a less polished effort, with fewer opinions on how a backend "should" work.
 
 ### Running the app locally
