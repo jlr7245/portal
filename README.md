@@ -29,7 +29,9 @@ Tech required to run locally:
 3. You can run the app with the frontend decoupled from the backend, or with the backend serving the frontend. The functionality is the same.
     - For the former: Run `yarn start:portal`, and in a separate terminal window, `yarn start:server`. You'll be able to access the app at `http://localhost:1234`.
     - For the latter: Run `yarn start:production`. You'll be able to access the app at `http://localhost:3000`.
-4. Clean up by running `yarn db:clean`. This will delete the patient portal database.
+4. To seed the database, run `yarn db:seed`. This creates a number of users who have registered and have appointment times, and one user who is the admin. You can log in as the admin with the username / password pair `chewbacca` / `mlfalcon`.
+5. Use the interface to your heart's content.
+6. Clean up by running `yarn db:clean`. This will delete the patient portal database.
 
 
 ### Potential Improvements
@@ -39,7 +41,8 @@ Tech required to run locally:
 - Pagination & lazy loading of the list of registrants
 - Display available appointment times & keep track of filled ones
 - Display appointment time requests in a calendar on the admin side
-- 
+- Visually mark users who have registered since the admin last logged in
+- Make a separate AdminUser class that holds methods like `dash` and `promoteUser`
 
 ## The Frontend
 
