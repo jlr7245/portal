@@ -1,0 +1,15 @@
+form {
+  label {
+    display: block;
+    font-size: 13px;
+    color: $text;
+    padding: 5px 0;
+  }
+  .form-row {
+    display: flex;
+    > div {
+      flex-grow: 1;
+    }
+  }
+}
+

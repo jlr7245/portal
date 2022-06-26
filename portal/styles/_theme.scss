@@ -11,9 +11,16 @@ $dkg: #333;
 $text: #555;
 $ltg: #ddd;
 
+$err: #FF9494;
+
 $epi: 'Epilogue', sans-serif;
 $mono: 'IBM Plex Mono', monospace;
 $sans: 'IBM Plex Sans', sans-serif;
+
+body, input, button, p, div {
+  font-family: $sans;
+  box-sizing: border-box;
+}
 
 
 @mixin mobile-down {
@@ -35,4 +42,30 @@ $sans: 'IBM Plex Sans', sans-serif;
   @media screen and (min-width: 1800px) { @content; }
 }
 
+
+// various mixins;
+@mixin button {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@mixin button-active {
+  background-color: $pri;
+  color: $pri-lt;
+  cursor: pointer;
+  &:hover, &:focus {
+    background-color: lighten($pri, 3);
+  }
+}
+
+
+@mixin button-inactive {
+  background-color: $pri-lt;
+  color: $pri;
+  cursor: not-allowed;
+}
 
