@@ -6,8 +6,11 @@
   @include tabletportrait-down {
     flex-direction: column;
   }
-  .fullscreen {
+  &.fullscreen {
     min-width: 100vw;
     min-height: 100vh;
+  }
+  &.mostscreen {
+    flex-grow: 1;
   }
 }

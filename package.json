@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "apollo-upload-client": "^17.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
@@ -37,6 +38,7 @@
     "express-session": "^1.17.3",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",
+    "graphql-upload": "^15.0.1",
     "morgan": "^1.10.0",
     "node-fetch": "^3.2.6",
     "pg-promise": "^10.11.1",

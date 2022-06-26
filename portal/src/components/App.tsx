@@ -1,7 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
-import { RegisterForm } from './views';
+import { Route, Routes } from 'react-router-dom';
+import { LoginForm, RegisterForm } from './views';
 
 const App = () => {
   return (
@@ -11,6 +10,7 @@ const App = () => {
       </div>
       <Routes>
         <Route path="/" element={<RegisterForm />} />
+        <Route path="login" element={<LoginForm />} />
       </Routes>
     </>
   );

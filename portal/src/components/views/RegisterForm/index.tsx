@@ -33,7 +33,7 @@ const GET_GOOGLE_KEY = gql`
 const RegisterFormController = () => {
   const [registerUser, { data: userData, loading: userLoading, error: userError }] =
     useMutation(REGISTER_USER);
-    
+
   const {
     data: keyData,
     loading: keyLoading,
@@ -46,7 +46,6 @@ const RegisterFormController = () => {
    * 3. When the registerUser is completed successfully, display a Redirect component (or use a useNavigate hook? hmm)
    */
 
-  console.log(keyData, keyLoading, keyError);
   return (
     <div>
       {keyLoading ? (
