@@ -8,12 +8,16 @@ const REGISTER_USER = gql`
     $first_name: String!
     $last_name: String!
     $password: String!
+    $photo_url: String!
+    $address: String!
   ) {
     createUser(
       username: $username
       first_name: $first_name
       last_name: $last_name
       password: $password
+      photo_url: $photo_url
+      address: $address
     ) {
       username
       first_name
@@ -40,12 +44,6 @@ const RegisterFormController = ({ setAuth }: { setAuth: Function }) => {
     error: keyError,
   } = useQuery(GET_GOOGLE_KEY);
 
-  /**
-   * 1. Don't show anything until we get the google key back;
-   * 2. When we get the key, show the form;
-   * 3. When the registerUser is completed successfully, display a Redirect component (or use a useNavigate hook? hmm)
-   */
-
   return (
     <div>
       {keyLoading ? (
@@ -53,7 +51,7 @@ const RegisterFormController = ({ setAuth }: { setAuth: Function }) => {
       ) : (
         <RegisterForm
           registerUser={registerUser}
-          googleKey={keyData.googleKey}
+          googleKey={keyData?.googleKey}
           setAuth={setAuth}
         />
       )}

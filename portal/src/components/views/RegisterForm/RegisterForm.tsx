@@ -1,9 +1,16 @@
 import { Form, Formik } from 'formik';
-import React from 'react';
+import Autocomplete from 'react-google-autocomplete';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { Container, SubmitButton, TextInput, UploadImage } from '../../layout';
+import {
+  AddressInput,
+  Container,
+  SubmitButton,
+  TextInput,
+  UploadImage,
+} from '../../layout';
 import './RegisterForm.scss';
 
 type RegisterFormProps = {
@@ -21,6 +28,7 @@ const RegisterFormValidationSchema = Yup.object().shape({
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
   photo: Yup.string().required('Required'),
+  address: Yup.string().required('Required'),
 });
 
 const RegisterForm = ({
@@ -29,6 +37,7 @@ const RegisterForm = ({
   setAuth,
 }: RegisterFormProps): React.ReactElement => {
   const navigator = useNavigate();
+  const [address, setAddress] = useState('');
   return (
     <Container>
       <div className="form-holder">
@@ -40,10 +49,12 @@ const RegisterForm = ({
             password: '',
             password_confirm: '',
             photo: '',
+            address,
           }}
           validationSchema={RegisterFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const photo_url = localStorage.getItem('photo_url');
+            console.log(values)
             const user = await registerUser({ variables: { photo_url, ...values } });
             setAuth({ isLoggedIn: true, user });
             setSubmitting(false);
@@ -91,7 +102,7 @@ const RegisterForm = ({
                 <UploadImage name="photo" label="Upload License" required />
               </div>
               <div className="form-row">
-                
+                <AddressInput googleKey={googleKey} label="Address" name="address" />
               </div>
               <SubmitButton disabled={!props.isValid} label="Register" />
             </Form>
