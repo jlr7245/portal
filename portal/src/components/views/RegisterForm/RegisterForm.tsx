@@ -3,7 +3,7 @@ import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { Container, SubmitButton, TextInput } from '../../layout';
+import { Container, SubmitButton, TextInput, UploadImage } from '../../layout';
 import './RegisterForm.scss';
 
 type RegisterFormProps = {
@@ -82,6 +82,9 @@ const RegisterForm = ({
                 type="password"
                 placeholder="Confirm Password"
               />
+            </div>
+            <div className="form-row">
+              <UploadImage />
             </div>
             <SubmitButton disabled={!props.isValid} label="Register" />
           </Form>}

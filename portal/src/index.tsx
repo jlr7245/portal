@@ -10,10 +10,15 @@ import {
 
 import App from './components/App';
 import { BrowserRouter } from 'react-router-dom';
+//@ts-ignore
+import { createUploadLink } from 'apollo-upload-client';
 
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
+  link: createUploadLink({
+    uri: '/graphql',
+  }),
 });
 
 const container = document.getElementById('root');

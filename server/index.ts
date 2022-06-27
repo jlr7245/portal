@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { graphqlHTTP } from 'express-graphql';
 import session from 'express-session';
+//@ts-ignore
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
+
 
 import { StatusError } from './utils';
 import schema from './schema';
@@ -31,6 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   '/graphql',
+  graphqlUploadExpress({
+    maxFieldSize: 10000000,
+  }),
   graphqlHTTP({
     schema,
     graphiql: true,
@@ -45,6 +51,8 @@ app.use((err: StatusError | Error, _req: Request, res: Response, _next: NextFunc
   const status = err instanceof StatusError ? err.status : 500;
   if (err instanceof StatusError && process.env.NODE_ENV !== 'production') {
     console.log(err.error);
+  } else {
+    console.log(err);
   }
   res.status(status).json({ err, message: err.message });
 });
