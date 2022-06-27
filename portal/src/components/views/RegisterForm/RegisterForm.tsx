@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { Container, SubmitButton, TextInput, UploadImage } from '../../layout';
@@ -20,6 +20,7 @@ const RegisterFormValidationSchema = Yup.object().shape({
   password_confirm: Yup.string()
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
+  photo: Yup.string().required('Required'),
 });
 
 const RegisterForm = ({
@@ -38,56 +39,63 @@ const RegisterForm = ({
             username: '',
             password: '',
             password_confirm: '',
+            photo: '',
           }}
           validationSchema={RegisterFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
-            const user = await registerUser({ variables: values });
+            const photo_url = localStorage.getItem('photo_url');
+            const user = await registerUser({ variables: { photo_url, ...values } });
             setAuth({ isLoggedIn: true, user });
             setSubmitting(false);
             resetForm();
             navigator('/dash');
           }}
         >
-          {props => <Form>
-            <div className="form-row">
+          {(props) => (
+            <Form>
+              <div className="form-row">
+                <TextInput
+                  name="first_name"
+                  label="First Name"
+                  type="text"
+                  placeholder="Jane"
+                />
+                <TextInput
+                  name="last_name"
+                  label="Last Name"
+                  type="text"
+                  placeholder="Doe"
+                />
+              </div>
               <TextInput
-                name="first_name"
-                label="First Name"
+                name="username"
+                label="Username"
                 type="text"
-                placeholder="Jane"
+                placeholder="jane33"
               />
-              <TextInput
-                name="last_name"
-                label="Last Name"
-                type="text"
-                placeholder="Doe"
-              />
-            </div>
-            <TextInput
-              name="username"
-              label="Username"
-              type="text"
-              placeholder="jane33"
-            />
-            <div className="form-row">
-              <TextInput
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Password"
-              />
-              <TextInput
-                name="password_confirm"
-                label="Confirm Password"
-                type="password"
-                placeholder="Confirm Password"
-              />
-            </div>
-            <div className="form-row">
-              <UploadImage />
-            </div>
-            <SubmitButton disabled={!props.isValid} label="Register" />
-          </Form>}
+              <div className="form-row">
+                <TextInput
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Password"
+                />
+                <TextInput
+                  name="password_confirm"
+                  label="Confirm Password"
+                  type="password"
+                  placeholder="Confirm Password"
+                />
+              </div>
+              <div className="form-row">
+                <UploadImage name="photo" label="Upload License" required />
+              </div>
+              <div className="form-row">
+                
+              </div>
+              <SubmitButton disabled={!props.isValid} label="Register" />
+            </Form>
+          )}
         </Formik>
       </div>
     </Container>
