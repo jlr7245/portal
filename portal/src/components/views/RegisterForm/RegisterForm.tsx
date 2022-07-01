@@ -27,6 +27,7 @@ const RegisterFormValidationSchema = Yup.object().shape({
   password_confirm: Yup.string()
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
+  email: Yup.string().email().required('Required'),
   photo: Yup.string().required('Required'),
 });
 
@@ -45,6 +46,7 @@ const RegisterForm = ({
             first_name: '',
             last_name: '',
             username: '',
+            email: '',
             password: '',
             password_confirm: '',
             photo: '',
@@ -52,7 +54,9 @@ const RegisterForm = ({
           validationSchema={RegisterFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const photo_url = localStorage.getItem('photo_url');
-            const user = await registerUser({ variables: { photo_url, address, ...values } });
+            const user = await registerUser({
+              variables: { photo_url, address, ...values },
+            });
             setAuth({ isLoggedIn: true, user });
             setSubmitting(false);
             resetForm();
@@ -75,12 +79,20 @@ const RegisterForm = ({
                   placeholder="Doe"
                 />
               </div>
-              <TextInput
-                name="username"
-                label="Username"
-                type="text"
-                placeholder="jane33"
-              />
+              <div className="form-row">
+                <TextInput
+                  name="username"
+                  label="Username"
+                  type="text"
+                  placeholder="jane33"
+                />
+                <TextInput
+                  name="email"
+                  label="Email"
+                  type="email"
+                  placeholder="jane33@jmail.com"
+                />
+              </div>
               <div className="form-row">
                 <TextInput
                   name="password"
@@ -99,7 +111,13 @@ const RegisterForm = ({
                 <UploadImage name="photo" label="Upload License" required />
               </div>
               <div className="form-row">
-                <AddressInput googleKey={googleKey} setAddress={setAddress} address={address} label="Address" name="address" />
+                <AddressInput
+                  googleKey={googleKey}
+                  setAddress={setAddress}
+                  address={address}
+                  label="Address"
+                  name="address"
+                />
               </div>
               <SubmitButton disabled={!props.isValid} label="Register" />
             </Form>

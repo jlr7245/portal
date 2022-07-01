@@ -35,6 +35,9 @@ body, input, button, p, div {
 @mixin tabletlandscape-up {
   @media screen and (min-width: 900px) { @content; }
 }
+@mixin tabletlandscape-down {
+  @media screen and (max-width: 1199px) { @content; }
+}
 @mixin desktop-up {
   @media screen and (min-width: 1200px) { @content; }
 }

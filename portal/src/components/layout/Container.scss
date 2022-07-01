@@ -2,13 +2,15 @@
 
 .view-container {
   display: flex;
-  flex-direction: row;
   @include tabletportrait-down {
     flex-direction: column;
   }
   &.fullscreen {
     min-width: 100vw;
     min-height: 100vh;
+  }
+  &.column {
+    flex-direction: column;
   }
   &.mostscreen {
     flex-grow: 1;
