@@ -42,7 +42,7 @@ function AddressInput({
           const { formatted_address } = place;
           setAddress(formatted_address);
         }}
-        onChange={(evt: FormEvent<HTMLInputElement>) => {
+        onChange={(evt) => {
           //@ts-ignore
           setAddress(evt.target.value);
           setFormErr('');
