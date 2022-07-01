@@ -28,7 +28,6 @@ const RegisterFormValidationSchema = Yup.object().shape({
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
   photo: Yup.string().required('Required'),
-  address: Yup.string().required('Required'),
 });
 
 const RegisterForm = ({
@@ -49,13 +48,11 @@ const RegisterForm = ({
             password: '',
             password_confirm: '',
             photo: '',
-            address,
           }}
           validationSchema={RegisterFormValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const photo_url = localStorage.getItem('photo_url');
-            console.log(values)
-            const user = await registerUser({ variables: { photo_url, ...values } });
+            const user = await registerUser({ variables: { photo_url, address, ...values } });
             setAuth({ isLoggedIn: true, user });
             setSubmitting(false);
             resetForm();
@@ -102,7 +99,7 @@ const RegisterForm = ({
                 <UploadImage name="photo" label="Upload License" required />
               </div>
               <div className="form-row">
-                <AddressInput googleKey={googleKey} label="Address" name="address" />
+                <AddressInput googleKey={googleKey} setAddress={setAddress} address={address} label="Address" name="address" />
               </div>
               <SubmitButton disabled={!props.isValid} label="Register" />
             </Form>

@@ -1,11 +1,15 @@
-import { Field, FieldHookConfig, FieldMetaProps, FieldProps, useField } from 'formik';
-import React, { useRef } from 'react';
+import React, { FormEvent, useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import './AddressInput.scss';
+import Error from './Error';
 
-interface OtherProps {
+interface AddressInputProps {
   label: string;
   googleKey: string;
+  setAddress: Function;
+  address: string;
+  id?: string;
+  name?: string;
 }
 
 interface PlaceType {
@@ -17,35 +21,46 @@ interface PlaceType {
   }[];
 }
 
-function AddressInput<FormValues>({
+function AddressInput({
   label,
   googleKey,
+  setAddress,
+  address,
   ...props
-}: OtherProps & FieldHookConfig<FormValues>) {
+}: AddressInputProps) {
+  const [hasBeenTouched, setHasBeenTouched] = useState(false);
+  const [formErr, setFormErr] = useState('');
   return (
-    <Field name={props.id || props.name}>
-      {({ field, meta }: { field: FieldProps; meta: FieldMetaProps<string> }) => (
-        <div className="addressinput-holder">
-          <label htmlFor={props.id || props.name} className="textinput-label">
-            {label}
-          </label>
-          <Autocomplete
-            className="text-input"
-            apiKey={googleKey}
-            onPlaceSelected={(place: PlaceType, input) => {
-              console.log(field, meta);
-              const { formatted_address } = place;
-              console.log(formatted_address);
-            }}
-            options={{
-              types: ['address'],
-            }}
-            {...field}
-          />
-          {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
-        </div>
-      )}
-    </Field>
+    <div className="addressinput-holder">
+      <label htmlFor={props.id || props.name} className="textinput-label">
+        {label}
+      </label>
+      <Autocomplete
+        className="text-input"
+        apiKey={googleKey}
+        onPlaceSelected={(place: PlaceType, input) => {
+          const { formatted_address } = place;
+          setAddress(formatted_address);
+        }}
+        onChange={(evt: FormEvent<HTMLInputElement>) => {
+          //@ts-ignore
+          setAddress(evt.target.value);
+          setFormErr('');
+        }}
+        onBlur={(evt) => {
+          setHasBeenTouched(true);
+          if (!evt.target.value.includes(',')) {
+            setFormErr('Required');
+          } else {
+            setFormErr('');
+          }
+        }}
+        options={{
+          types: ['address'],
+        }}
+      />
+      <Error touched={hasBeenTouched} error={formErr} />
+    </div>
   );
 }
 

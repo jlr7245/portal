@@ -91,8 +91,8 @@ export const query = {
       if (!req.session.user) return null;
       //@ts-ignore
       return req.session.user;
-    }
-  }
+    },
+  },
 };
 
 export const mutation = {
@@ -104,10 +104,19 @@ export const mutation = {
       first_name: { type: GraphQLString },
       last_name: { type: GraphQLString },
       password: { type: GraphQLString },
+      photo_url: { type: GraphQLString },
+      address: { type: GraphQLString },
     },
     resolve: async (
       _root: any,
-      args: { username: string; first_name: string; last_name: string; password: string },
+      args: {
+        username: string;
+        first_name: string;
+        last_name: string;
+        password: string;
+        photo_url: string;
+        address: string;
+      },
       req: Request,
     ) => {
       try {

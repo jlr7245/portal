@@ -1,0 +1,11 @@
+@import '../../../../styles/theme';
+
+.error {
+  color: $err;
+  font-size: 12px;
+  padding: 5px 0;
+  .error-spacer {
+    height: 12px;
+    width: 12px;
+  }
+}

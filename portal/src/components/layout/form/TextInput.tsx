@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Field, FieldHookConfig, useField } from 'formik';
 import './TextInput.scss';
+import Error from './Error';
 
 interface OtherProps {
   label: string;
@@ -16,7 +17,7 @@ function TextInput<FormValues>({
     <div className="textinput-holder">
       <label htmlFor={props.id || props.name} className="textinput-label">{label}</label>
       <Field className="text-input" {...field} {...props} />
-      {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+      <Error {...meta} /> 
     </div>
   );
 }
